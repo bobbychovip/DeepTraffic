@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 
 def get_norm_data():
-    df = pd.read_csv('norm_traffic1.csv') 
+    df = pd.read_csv('./data/norm_traffic.csv') 
     vehicles = df['vehicles'].as_matrix()
     velocity = df['velocity'].as_matrix()
     vehicles1 = vehicles.reshape((36, 1152))
