@@ -49,8 +49,10 @@ class LSTMRNN(object):
             10364/BATCH_SIZE, LEARNING_RATE_DECAY)
 
         with tf.name_scope('inputs'):
-            self.xs = tf.placeholder(tf.float32, [None, n_steps, input_size], name='xs')
-            self.ys = tf.placeholder(tf.float32, [None, output_size], name='ys')
+            self.xs = tf.placeholder(tf.float32, 
+                                     [None, n_steps, input_size], name='xs')
+            self.ys = tf.placeholder(tf.float32, 
+                                     [None, output_size], name='ys')
         with tf.variable_scope('in_hidden'):
             self.add_input_layer()
         with tf.variable_scope('LSTM_cell'):
@@ -62,7 +64,8 @@ class LSTMRNN(object):
         with tf.name_scope('accuracy'):
             self.evaluate_model()
         with tf.name_scope('train'):
-            self.train_op = tf.train.AdamOptimizer(self.learning_rate).minimize(self.cost, global_step=self.global_step)
+            self.train_op = tf.train.AdamOptimizer(
+                self.learning_rate).minimize(self.cost, global_step=self.global_step)
 
     # 输入层计算
     def add_input_layer(self,):
@@ -79,14 +82,16 @@ class LSTMRNN(object):
         activations = tf.nn.sigmoid(l_in_y, name='activation')
         tf.summary.histogram('activations', activations)
         # reshape l_in_y ==> (batch, n_steps, cell_size)
-        self.l_in_y = tf.reshape(l_in_y, [-1, self.n_steps, self.cell_size], name='input_layer_y')
+        self.l_in_y = tf.reshape(l_in_y, 
+                                 [-1, self.n_steps, self.cell_size], name='input_layer_y')
 
     # LSTM 单元计算
     def add_cell(self): 
         lstm_cell = tf.contrib.rnn.BasicLSTMCell(self.cell_size, forget_bias=1.0, state_is_tuple=True) 
         with tf.name_scope('initial_state'):
             self.cell_init_state = lstm_cell.zero_state(self.batch_size, dtype=tf.float32)
-        self.cell_outputs, self.cell_final_state = tf.nn.dynamic_rnn( lstm_cell, self.l_in_y, initial_state=self.cell_init_state, time_major=False) 
+        self.cell_outputs, self.cell_final_state = tf.nn.dynamic_rnn( 
+            lstm_cell, self.l_in_y, initial_state=self.cell_init_state, time_major=False) 
     
     #  输出层计算
     def add_output_layer(self):
@@ -161,7 +166,8 @@ if __name__ == '__main__':
                 model.xs: xs,
                 model.ys: ys
             }
-            summary, acc, step = sess.run([merged, model.accuracy, model.global_step], feed_dict=feed_dict)
+            summary, acc, step = sess.run(
+                [merged, model.accuracy, model.global_step], feed_dict=feed_dict)
             test_writer.add_summary(summary, i)
             print "Iter " + str(i*BATCH_SIZE) + ", Test Accuracy= " + \
                 "{:.6f}".format(acc)
