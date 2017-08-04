@@ -22,14 +22,9 @@ MODEL_NAME = "model.ckpt"
 # 获取训练集和测试集数据
 def get_data(train):
     X_train, y_train, X_test, y_test = input_data.split_dataset()
-    #train_batch_X = X_train[(step-1)*batch_size:step*batch_size]
-    #train_batch_y = y_train[(step-1)*batch_size:step*batch_size]
     if train:
-        #data_X = X_train[(step-1)*batch_size:step*batch_size]
-        #data_y = y_train[(step-1)*batch_size:step*batch_size]
         return X_train, y_train
     else:
-        #data_X, data_y = X_test, y_test 
         return X_test, y_test 
 
 
@@ -198,7 +193,6 @@ if __name__ == '__main__':
         i += 1
     print "Training finished!"
 
-    # save model 
     # restore model
     #sess.run(tf.global_variables_initializer())
     #saver.restore(sess, save_path)
