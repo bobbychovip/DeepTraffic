@@ -4,7 +4,7 @@ import numpy as np
 
 # 读取算法所需的列
 def get_data():
-    df = pd.read_csv('GZ_traffic.csv', usecols=[1, 5, 9, 11, 12, 13, 
+    df = pd.read_csv('./data/GZ_traffic.csv', usecols=[1, 5, 9, 11, 12, 13, 
                                                 14,15, 16, 17, 18, 
                                                 19, 20,21, 22, 23, 
                                                 24, 25, 26,27, 28])
